@@ -1,0 +1,18 @@
+{
+    "project_name":       "bootloader",
+    "project_path":       "D:/ESPRESSIF/components/bootloader/subproject",
+    "build_dir":          "D:/Eclipse/Progetti/AIcam/build/bootloader",
+    "config_file":        "D:/Eclipse/Progetti/AIcam/sdkconfig",
+    "config_defaults":    "",
+    "app_elf":            "bootloader.elf",
+    "app_bin":            "bootloader.bin",
+    "git_revision":       "v4.0.1-dirty",
+    "phy_data_partition": "",
+    "monitor_baud" : "115200",
+    "config_environment" : {
+        "COMPONENT_KCONFIGS" : "D:/ESPRESSIF/components/efuse/Kconfig;D:/ESPRESSIF/components/esp32/Kconfig;D:/ESPRESSIF/components/esp_common/Kconfig;D:/ESPRESSIF/components/log/Kconfig;D:/ESPRESSIF/components/spi_flash/Kconfig",
+        "COMPONENT_KCONFIGS_PROJBUILD" : "D:/ESPRESSIF/components/bootloader/Kconfig.projbuild;D:/ESPRESSIF/components/esptool_py/Kconfig.projbuild;D:/ESPRESSIF/components/partition_table/Kconfig.projbuild"
+    },
+    "build_components" : [ "bootloader", "bootloader_support", "efuse", "esp32", "esp_common", "esp_rom", "esptool_py", "log", "main", "micro-ecc", "partition_table", "soc", "spi_flash", "xtensa", "" ],
+    "build_component_paths" : [ "D:/ESPRESSIF/components/bootloader", "D:/ESPRESSIF/components/bootloader_support", "D:/ESPRESSIF/components/efuse", "D:/ESPRESSIF/components/esp32", "D:/ESPRESSIF/components/esp_common", "D:/ESPRESSIF/components/esp_rom", "D:/ESPRESSIF/components/esptool_py", "D:/ESPRESSIF/components/log", "D:/ESPRESSIF/components/bootloader/subproject/main", "D:/ESPRESSIF/components/bootloader/subproject/components/micro-ecc", "D:/ESPRESSIF/components/partition_table", "D:/ESPRESSIF/components/soc", "D:/ESPRESSIF/components/spi_flash", "D:/ESPRESSIF/components/xtensa", "" ]
+}

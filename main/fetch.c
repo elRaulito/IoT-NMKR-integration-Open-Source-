@@ -1,8 +1,8 @@
 /*
  * fetch.c
  *
- *  Created on: 26 giu 2020
- *      Author: UTPM9
+ *  Created on: 9 Nov 2020
+ *      Author: Raul Rosa
  */
 
 #include <stdio.h>
@@ -12,11 +12,14 @@
 #include "cJSON.h"
 #include "driver/ledc.h"
 #include "fetch.h"
+#include "esp_wifi.h"
+#include "connect.h"
 
 
 
 
-
+char *incomingData=NULL;
+int indexBuffer=0;
 
 
 esp_err_t eventHandlerClient(esp_http_client_event_t *evt){
@@ -24,12 +27,36 @@ esp_err_t eventHandlerClient(esp_http_client_event_t *evt){
 
 	switch(evt->event_id){
 	case HTTP_EVENT_ON_DATA:
-		printf("contenuto fetchato %.*s\n",evt->data_len,(char*)evt->data);
+
+
+		if(incomingData==NULL){
+
+			incomingData=(char*)malloc(evt->data_len);
+		}else{
+
+			incomingData=(char*)realloc(incomingData,evt->data_len+indexBuffer);
+		}
+
+		memcpy(&incomingData[indexBuffer],evt->data,evt->data_len);
+		indexBuffer+=evt->data_len;
+
+		break;
+
+
+	case HTTP_EVENT_ON_FINISH:
+		incomingData=(char*)realloc(incomingData,indexBuffer+1);
+		memcpy(&incomingData[indexBuffer],"\0",1);
+		printf("content fetched %.*s\n",indexBuffer,incomingData);
 		if(fetchparams->onGotData!=NULL){
-			fetchparams->onGotData((char*)evt->data);
+			fetchparams->onGotData(incomingData);
+			free(incomingData);
+			indexBuffer=0;
+			incomingData=NULL;
 		}
 
 		break;
+
+
     default:
 	break;
 
@@ -39,6 +66,8 @@ esp_err_t eventHandlerClient(esp_http_client_event_t *evt){
 }
 
 
+
+
 void fetch(char* url, struct FetchParams *fetchparams){
 
 esp_http_client_config_t clientConf={
@@ -46,6 +75,7 @@ esp_http_client_config_t clientConf={
 		.event_handler=eventHandlerClient,
 		.user_data=fetchparams,
 		.buffer_size=1024
+
 
 };
 
@@ -71,11 +101,12 @@ if(fetchparams->body!=NULL){
 esp_err_t err=esp_http_client_perform(client);
 fetchparams->status=esp_http_client_get_status_code(client);
 if(err==ESP_OK){
-//tutto bene
-	printf("contenuto di dimensione %d\n",esp_http_client_get_content_length(client));
+
+	printf("got content of lenght %d\n",esp_http_client_get_content_length(client));
 }else{
-	//male male
-	printf("errore\n");
+
+	printf("error \n");
+
 
 }
 

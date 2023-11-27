@@ -1,0 +1,43 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "D:/Eclipse/Progetti/AIcam/build/CMakeFiles/bootloader"
+		},
+		{
+			"file" : "D:/Eclipse/Progetti/AIcam/build/CMakeFiles/bootloader.rule"
+		},
+		{
+			"file" : "D:/Eclipse/Progetti/AIcam/build/CMakeFiles/bootloader-complete.rule"
+		},
+		{
+			"file" : "D:/Eclipse/Progetti/AIcam/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule"
+		},
+		{
+			"file" : "D:/Eclipse/Progetti/AIcam/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule"
+		},
+		{
+			"file" : "D:/Eclipse/Progetti/AIcam/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule"
+		},
+		{
+			"file" : "D:/Eclipse/Progetti/AIcam/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule"
+		},
+		{
+			"file" : "D:/Eclipse/Progetti/AIcam/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule"
+		},
+		{
+			"file" : "D:/Eclipse/Progetti/AIcam/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule"
+		},
+		{
+			"file" : "D:/Eclipse/Progetti/AIcam/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"bootloader"
+		],
+		"name" : "bootloader"
+	}
+}

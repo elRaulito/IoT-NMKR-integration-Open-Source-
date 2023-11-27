@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <title>Seminja</title>
+  <title>Camera IOTMKR</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="boot/css/bootstrap.min.css">
@@ -19,11 +19,69 @@
       background-color: #f2f2f2;
       padding: 25px;
     }
+
+
+      /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+      .row.content {height: 550px}
+
+      /* Set gray background color and 100% height */
+      .sidenav {
+        background-color: #f1f1f1;
+        height: 100%;
+      }
+
+      /* On small screens, set height to 'auto' for the grid */
+      @media screen and (max-width: 767px) {
+        .row.content {height: auto;}
+      }
+
+      .navbar-custom {
+          background-color:#7DE38D;
+          color:#00242B;
+          border-radius:0;
+      }
+
+      .navbar-custom .navbar-nav > li > a {
+          color:#00242B;
+      }
+
+      .navbar-custom .navbar-nav > .active > a {
+          color: #00242B;
+          background-color:transparent;
+      }
+
+      .navbar-custom .navbar-nav > li > a:hover,
+      .navbar-custom .navbar-nav > li > a:focus,
+      .navbar-custom .navbar-nav > .active > a:hover,
+      .navbar-custom .navbar-nav > .active > a:focus,
+      .navbar-custom .navbar-nav > .open >a {
+          text-decoration: none;
+          background-color: #7DE38D;
+      }
+
+      .navbar-custom .navbar-brand {
+          color:#00242B;
+      }
+      .navbar-custom .navbar-toggle {
+          background-color:#00242B;
+      }
+      .navbar-custom .icon-bar {
+          background-color:#33aa33;
+      }
+
   </style>
+
+  <style type="text/css">
+   body { background: #00242B !important; } /* Adding !important forces the browser to overwrite the default style applied by Bootstrap */
+</style>
 </head>
+
 <body>
 
-<nav class="navbar navbar-default">
+
+
+
+<nav class="navbar navbar-custom">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -31,25 +89,27 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Seminja</a>
+      <a class="navbar-brand" href="#">Camera IOTMKR</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li><a href="index.html">Dashboard</a></li>
-        <li class="active"><a href="settings.html">Settings</a></li>
+        <li  class="active"><a href="wifi.html">Wifi settings</a></li>
+        <li><a href="gateway.html">Project uid</a></li>
+        <li><a href="apikey.html">Api key settings</a></li>
+        <li><a href="deviceid.html">Receiver address</a></li>
       </ul>
     </div>
   </div>
 </nav>
 
+
+
 <div style="background:transparent !important" class="jumbotron center">
   <div class="container text-center">
-    <h1>Mi collegherò a questa rete...</h1>
+    <img src="img/IOTMKR.png" class="img-responsive center" alt="cover">
   </div>
-  <div class="text-center">
 
-
-  </div>
 </div>
 
 <div class="container-fluid bg-3 text-center">
@@ -58,25 +118,24 @@
 
     </div>
     <div class="col-sm-4">
-      <img src="img/pianta.gif" class="img-responsive center" alt="piantina">
       <form>
         <div class="input-group">
           <span class="input-group-addon"><i>SSID</i></span>
-          <input id="wifi-ssid" type="text" class="form-control" name="wifi" placeholder="Inserire il nome del wifi domestico">
+          <input id="wifi-ssid" type="text" class="form-control" name="wifi" placeholder="Wifi name">
         </div>
         <div class="input-group">
           <span class="input-group-addon"><i>PSW</i></span>
-          <input id="password" type="password" class="form-control" name="password" placeholder="Inserire la password">
+          <input id="password" type="password" class="form-control" name="password" placeholder="Password">
         </div>
       </form>
       <br>
       <br>
-      <a href="index.html"><button  type="button" class="btn btn-success" onclick="sendServer()">Fine</button></a>
+      <a href="index.html"><button  type="button" class="btn btn-success" onclick="sendServer()">Save</button></a>
     </div>
     <div class="col-sm-4">
     </div>
   </div>
-</div><br><br>
+</div>
 
 
 <script>
