@@ -5,6 +5,8 @@
 
 This project was funded by Catalyst Fund 10 and integrates minting of NFTs on ESP32 embedded device thanks to NMKR studio APIs.
 
+You can find the video tutorial here https://youtu.be/I2P5EhZ9DPg
+
 # Bill of Materials
 
 ![BOM](https://raw.githubusercontent.com/elRaulito/IoT-NMKR-integration-Open-Source-/main/images/2.png)
