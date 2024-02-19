@@ -22,6 +22,8 @@ After installing ESP-IDF 4.0 (**Some libraries don't work with 4.1 version**) an
 
 You can download ESP-IDF from here: https://docs.espressif.com/projects/esp-idf/en/release-v4.0/get-started/index.html#get-started-get-esp-idf
 
+Here a tutorial about how to use the library in the command line: https://youtu.be/Q4lmcQgpIio
+
 ```
 idf.py all
 ```
