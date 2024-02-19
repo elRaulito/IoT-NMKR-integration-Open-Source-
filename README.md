@@ -19,6 +19,9 @@ In order to run this project you will need as hardware:
 # Build an flash
 
 After installing ESP-IDF 4.0 (**Some libraries don't work with 4.1 version**) and the esp-camera library (it is not already included in the components of esp-idf) go into the AIcam folder open esp-idf and run the command
+
+You can download ESP-IDF from here: https://docs.espressif.com/projects/esp-idf/en/release-v4.0/get-started/index.html#get-started-get-esp-idf
+
 ```
 idf.py all
 ```
