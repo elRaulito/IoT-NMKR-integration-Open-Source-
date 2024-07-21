@@ -11,10 +11,11 @@
 #include "freertos/FreeRTOS.h"
 #include "camera.h"
 #include "esp_wifi.h"
+#include "cJSON.h"
 struct timeval tv;
 
 char startBody[]="{\"tokenname\": \"IOT";
-char midBody[]="\",\"displayname\": \"test01\",\"description\": \"hello\",\"previewImageNft\":{\"mimetype\": \"image/png\",\"fileFromBase64\":\"";
+char midBody[]="\",\"displayname\": \"test01\",\"description\": \"hello\",\"previewImageNft\":{\"mimetype\": \"image/jpeg\",\"fileFromBase64\":\"";
 char endBody[]="\"}, \"priceInLovelace\": 4500000,\"isBlocked\": false}";
 char startTangleBody[]="{\"iot2tangle\": [ { \"sensor\":\"Address\", \"data\": [ { \"name\": \"Tangle 2 Street\" } ] } ,{\"sensor\": \"Camera\",\"data\":[{\"cars\":";
 char midTangleBody[]="}]}], \"device\": \"";
@@ -23,7 +24,8 @@ char endTangleBody[]="\", \"timestamp\": 0  }";
 extern xSemaphoreHandle connectionSemaphore;
 
 //arrays to store the values in NVS
-char gatewayNVS[20],apikeyNVS[50],deviceidNVS[30];
+char projectuidNVS[50],apikeyNVS[50],addressNVS[104];
+char nftuid[40];
 
 //number of detected elements by AI
 int carNumber,animalNumber,bikeNumber,scooterNumber,personNumber,accidentsNumber,nftUid;
@@ -31,24 +33,25 @@ int carNumber,animalNumber,bikeNumber,scooterNumber,personNumber,accidentsNumber
 int flagAnimal,flagScooter,flagBike,flagPerson;
 
 
- int getItems(char* response, char* item){
-    char *ptr=response;
-    int total=0;
-
-    while(strstr(ptr,item)!=NULL){
-    total++;
-    ptr=strstr(ptr,item)+1;
+void onGotData(char* data) {
+    cJSON *payload = cJSON_Parse(data);
+    if (payload == NULL) {
+        printf("Error parsing JSON\n");
+        return;
     }
 
-    return total;
- }
+    cJSON *nftUidItem = cJSON_GetObjectItem(payload, "nftUid");
+    if (!cJSON_IsString(nftUidItem) || (nftUidItem->valuestring == NULL)) {
+        printf("nftUid not found or is not a string\n");
+        cJSON_Delete(payload);
+        return;
+    }
 
- void onGotData(char* data){
+    strncpy(nftuid, nftUidItem->valuestring, sizeof(nftuid) - 1);
+    nftuid[sizeof(nftuid) - 1] = '\0'; // Ensure null-terminated string
 
-	nftUid=getItems(data,"nftUid");//this line detectes toy vehicles
-
-    printf("There are %d cars\n",nftUid);
- }
+    cJSON_Delete(payload);
+}
 
 
 
@@ -83,24 +86,31 @@ void ShootTask(void* params){
 
 			 };
 
+			 char Authnew[50];
+			 strcpy(Authnew,"Bearer ");
+			 strcat(Authnew,apikeyNVS);
+
 			 Header AuthHeader={
 					 .key="Authorization",
-					 .value="Bearer 641958a078434527a6e6388c07ca7dd8"
+					 .value=Authnew
 
 			 };
+			 printf(Authnew,"auth string");
 
 			 AIparams.header[0]=hostAIHeader;
 			 AIparams.header[1]=AuthHeader;
 			 AIparams.header[3]=typeHeader;
 
-			 char bodyNew[40000];
+			 char bodyNew[50000];
 			 strcpy(bodyNew,startBody);
 			 char stringRandom[20];
-			 sprintf(stringRandom,"%d",(int)tv.tv_sec);
+			 sprintf(stringRandom,"%d",(int)tv.tv_sec+1000);
 			 strcat(bodyNew,stringRandom);
 			 strcat(bodyNew,midBody);
 			 printf(bodyNew);
 			 strcat(bodyNew,(char*)buffer);
+			 printf(bodyNew);
+			 printf(projectuidNVS);
 			 strcat(bodyNew,endBody);
 			 AIparams.body=bodyNew;
 
@@ -115,94 +125,34 @@ void ShootTask(void* params){
 			 AIparams.header[2]=lenghtAIHeader;
 
 			 char request[500];
-			 strcpy(request,"https://studio-api.nmkr.io/v2/UploadNft/5cc3bf1a-a628-4712-9bf4-1891170d5336");
-			 //strcat(request,apikeyNVS); //HERE I ATTACH the uid project
+			 strcpy(request,"https://studio-api.nmkr.io/v2/UploadNft/");
+			 strcat(request,projectuidNVS); //HERE I ATTACH the uid project
+			 printf(request);
 			 fetch(request,&AIparams);
 
-			 /*
-			 struct  FetchParams TangleParams;
-			 char strCars[10];
-			 sprintf(strCars,"\"%d\"",carNumber);
+			 //poi qua faccio il mint
+			 printf(nftuid);
 
-			 TangleParams.headerCount=2;
-			 TangleParams.onGotData=NULL;
-			 TangleParams.method=POST;
+			 struct  FetchParams MintParams;
 
-			 char gatewayHost[30];
-			 strcpy(gatewayHost,gatewayNVS);
-			 //strcat(gatewayHost,":8080");
-
-			 Header hostTangleHeader={
-				 .key="Host",
-				 .value=gatewayHost
+			 MintParams.headerCount=3;
+			 MintParams.onGotData=onGotData;
+			 MintParams.method=GET;
+			 Header lenghtMintHeader={
+					 .key="Content-Length",
+					 .value="0"
 			 };
-
-			 Header hostTypeHeader={
-					 .key="Content-Type",
-					 .value="application/json"
-			 };
-
-
-			 char BodyTangle[5000];
-			 strcpy(BodyTangle,startTangleBody);
-			 strcat(BodyTangle,strCars);
+			MintParams.header[0]=hostAIHeader;
+			 MintParams.header[1]=AuthHeader;
+			 MintParams.header[2]=typeHeader;
 
 
 
-			 if(flagAnimal){
-				 char strAnimals[10];
-				 strcat(BodyTangle,",\"Animals\":");
-				 sprintf(strAnimals,"\"%d\"",animalNumber);
-				 strcat(BodyTangle,strAnimals);
+			char request2[500];
+			snprintf(request2, sizeof(request2), "https://studio-api.nmkr.io/v2/MintAndSendSpecific/%s/%s/1/%s", projectuidNVS, nftuid, addressNVS);
 
-			 }
-			 if(flagPerson){
-				 char strPersons[10];
-				 strcat(BodyTangle,",\"Pedestrians\":");
-				 sprintf(strPersons,"\"%d\"",personNumber);
-				 strcat(BodyTangle,strPersons);
-
-			 }
-			 if(flagBike){
-				 char strBikes[10];
-				 strcat(BodyTangle,",\"Bicycle\":");
-				 sprintf(strBikes,"\"%d\"",bikeNumber);
-				 strcat(BodyTangle,strBikes);
-
-			 }
-			 if(flagScooter){
-				 char strScooter[10];
-				 strcat(BodyTangle,",\"Scooter\":");
-				 sprintf(strScooter,"\"%d\"",scooterNumber);
-				 strcat(BodyTangle,strScooter);
-
-			 }
-			 char strAccidents[10];
-			 strcat(BodyTangle,",\"accidents\":");
-			 sprintf(strAccidents,"\"%d\"",accidentsNumber);
-			 strcat(BodyTangle,strAccidents);
-
-			 strcat(BodyTangle,midTangleBody);
-			 strcat(BodyTangle,deviceidNVS);
-			 strcat(BodyTangle,endTangleBody);
-			 TangleParams.header[0]=hostTangleHeader;
-			 TangleParams.header[1]=hostTypeHeader;
-
-			 TangleParams.body=BodyTangle;
-			 strcat(gatewayHost,"/messages");
-
-
-
-
-			 strcpy(request,"http://");
-			 strcat(request,gatewayHost);
-			 fetch(request,&TangleParams);
-			 printf("richiesta %s\n",request);
-			 printf("\n%s il body\n",BodyTangle);
-			 */
-
-
-
+			printf("Request URL: %s\n", request2);
+			fetch_quote(request2, &MintParams);
 
 
 

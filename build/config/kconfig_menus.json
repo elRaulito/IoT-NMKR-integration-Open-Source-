@@ -64,11 +64,11 @@
             {
                 "children": [],
                 "depends_on": "!IDF_CMAKE",
-                "help": "The executable name/path that is used to run python.\n\n(Note: This option is used with the legacy GNU Make build system only.)\n",
+                "help": "The executable name/path that is used to run python. On some systems Python 2.x\nmay need to be invoked as python2.\n\n(Note: This option is used with the legacy GNU Make build system only.)\n",
                 "id": "SDK_PYTHON",
                 "name": "SDK_PYTHON",
                 "range": null,
-                "title": "Python interpreter",
+                "title": "Python 2 interpreter",
                 "type": "string"
             },
             {
@@ -118,19 +118,6 @@
                 "range": null,
                 "title": "Exclude PROJECT_NAME from firmware image",
                 "type": "bool"
-            },
-            {
-                "children": [],
-                "depends_on": null,
-                "help": "At startup, the app will read this many hex characters from the embedded APP ELF SHA-256 hash value\nand store it in static RAM. This ensures the app ELF SHA-256 value is always available\nif it needs to be printed by the panic handler code.\nChanging this value will change the size of a static buffer, in bytes.\n",
-                "id": "APP_RETRIEVE_LEN_ELF_SHA",
-                "name": "APP_RETRIEVE_LEN_ELF_SHA",
-                "range": [
-                    8,
-                    64
-                ],
-                "title": "The length of APP ELF SHA is stored in RAM(chars)",
-                "type": "int"
             }
         ],
         "depends_on": null,
@@ -1983,26 +1970,6 @@
                             },
                             {
                                 "children": [],
-                                "depends_on": "BTDM_CTRL_MODE_BTDM",
-                                "help": "BLE auto latency, used to enhance classic BT performance\nwhile classic BT and BLE are enabled at the same time.\n",
-                                "id": "BTDM_CTRL_AUTO_LATENCY",
-                                "name": "BTDM_CTRL_AUTO_LATENCY",
-                                "range": null,
-                                "title": "Auto latency",
-                                "type": "bool"
-                            },
-                            {
-                                "children": [],
-                                "depends_on": null,
-                                "help": null,
-                                "id": "BTDM_CTRL_AUTO_LATENCY_EFF",
-                                "name": "BTDM_CTRL_AUTO_LATENCY_EFF",
-                                "range": null,
-                                "title": null,
-                                "type": "bool"
-                            },
-                            {
-                                "children": [],
                                 "depends_on": null,
                                 "help": null,
                                 "id": "BTDM_CTRL_BLE_MAX_CONN_EFF",
@@ -2342,7 +2309,7 @@
                             },
                             {
                                 "children": [],
-                                "depends_on": "BTDM_CTRL_MODE_BLE_ONLY || BTDM_CTRL_MODE_BTDM",
+                                "depends_on": "BTDM_CTRL_MODE_BLE_ONLY",
                                 "help": "The full scan function is mainly used to provide BLE scan performance.\nThis is required for scenes with high scan performance requirements, such as BLE Mesh scenes.\n",
                                 "id": "BTDM_CTRL_FULL_SCAN_SUPPORTED",
                                 "name": "BTDM_CTRL_FULL_SCAN_SUPPORTED",
@@ -4734,46 +4701,6 @@
                     {
                         "children": [
                             {
-                                "children": [
-                                    {
-                                        "children": [],
-                                        "depends_on": "<choice BT_NIMBLE_MEM_ALLOC_MODE>",
-                                        "help": null,
-                                        "id": "BT_NIMBLE_MEM_ALLOC_MODE_INTERNAL",
-                                        "name": "BT_NIMBLE_MEM_ALLOC_MODE_INTERNAL",
-                                        "range": null,
-                                        "title": "Internal memory",
-                                        "type": "bool"
-                                    },
-                                    {
-                                        "children": [],
-                                        "depends_on": "ESP32_SPIRAM_SUPPORT && <choice BT_NIMBLE_MEM_ALLOC_MODE>",
-                                        "help": null,
-                                        "id": "BT_NIMBLE_MEM_ALLOC_MODE_EXTERNAL",
-                                        "name": "BT_NIMBLE_MEM_ALLOC_MODE_EXTERNAL",
-                                        "range": null,
-                                        "title": "External SPIRAM",
-                                        "type": "bool"
-                                    },
-                                    {
-                                        "children": [],
-                                        "depends_on": "<choice BT_NIMBLE_MEM_ALLOC_MODE>",
-                                        "help": null,
-                                        "id": "BT_NIMBLE_MEM_ALLOC_MODE_DEFAULT",
-                                        "name": "BT_NIMBLE_MEM_ALLOC_MODE_DEFAULT",
-                                        "range": null,
-                                        "title": "Default alloc mode",
-                                        "type": "bool"
-                                    }
-                                ],
-                                "depends_on": null,
-                                "help": "Allocation strategy for NimBLE host stack, essentially provides ability to\nallocate all required dynamic allocations from,\n\n- Internal DRAM memory only\n- External SPIRAM memory only\n- Either internal or external memory based on default malloc()\n  behavior in ESP-IDF\n\nRecommended mode here is always internal, since that is most preferred\nfrom security perspective. But if application requirement does not\nallow sufficient free internal memory then alternate mode can be\nselected.\n",
-                                "id": "component-config-bluetooth-nimble-options-memory-allocation-strategy",
-                                "name": "BT_NIMBLE_MEM_ALLOC_MODE",
-                                "title": "Memory allocation strategy",
-                                "type": "choice"
-                            },
-                            {
                                 "children": [],
                                 "depends_on": "BT_NIMBLE_ENABLED",
                                 "help": "Defines maximum number of concurrent BLE connections\n",
@@ -5044,67 +4971,6 @@
                                 "type": "int"
                             },
                             {
-                                "children": [],
-                                "depends_on": "BT_NIMBLE_ENABLED",
-                                "help": "MSYS is a system level mbuf registry. For prepare write & prepare\nresponses MBUFs are allocated out of msys_1 pool. For NIMBLE_MESH\nenabled cases, this block count is increased by 8 than user defined\ncount.\n",
-                                "id": "BT_NIMBLE_MSYS1_BLOCK_COUNT",
-                                "name": "BT_NIMBLE_MSYS1_BLOCK_COUNT",
-                                "range": null,
-                                "title": "MSYS_1 Block Count",
-                                "type": "int"
-                            },
-                            {
-                                "children": [
-                                    {
-                                        "children": [],
-                                        "depends_on": "BT_NIMBLE_HS_FLOW_CTRL",
-                                        "help": "Host flow control interval in msecs\n",
-                                        "id": "BT_NIMBLE_HS_FLOW_CTRL_ITVL",
-                                        "name": "BT_NIMBLE_HS_FLOW_CTRL_ITVL",
-                                        "range": null,
-                                        "title": "Host Flow control interval",
-                                        "type": "int"
-                                    },
-                                    {
-                                        "children": [],
-                                        "depends_on": "BT_NIMBLE_HS_FLOW_CTRL",
-                                        "help": "Host flow control threshold, if the number of free buffers are at or\nbelow this threshold, send an immediate number-of-completed-packets\nevent\n",
-                                        "id": "BT_NIMBLE_HS_FLOW_CTRL_THRESH",
-                                        "name": "BT_NIMBLE_HS_FLOW_CTRL_THRESH",
-                                        "range": null,
-                                        "title": "Host Flow control threshold",
-                                        "type": "int"
-                                    },
-                                    {
-                                        "children": [],
-                                        "depends_on": "BT_NIMBLE_HS_FLOW_CTRL",
-                                        "help": "Enable this option to send number-of-completed-packets event to\ncontroller after disconnection\n",
-                                        "id": "BT_NIMBLE_HS_FLOW_CTRL_TX_ON_DISCONNECT",
-                                        "name": "BT_NIMBLE_HS_FLOW_CTRL_TX_ON_DISCONNECT",
-                                        "range": null,
-                                        "title": "Host Flow control on disconnect",
-                                        "type": "bool"
-                                    }
-                                ],
-                                "depends_on": "BT_NIMBLE_ENABLED",
-                                "help": "Enable Host Flow control\n",
-                                "id": "BT_NIMBLE_HS_FLOW_CTRL",
-                                "name": "BT_NIMBLE_HS_FLOW_CTRL",
-                                "range": null,
-                                "title": "Enable Host Flow control",
-                                "type": "bool"
-                            },
-                            {
-                                "children": [],
-                                "depends_on": "BT_NIMBLE_ENABLED",
-                                "help": "Time interval between RPA address change. This is applicable in case of\nHost based RPA\n",
-                                "id": "BT_NIMBLE_RPA_TIMEOUT",
-                                "name": "BT_NIMBLE_RPA_TIMEOUT",
-                                "range": null,
-                                "title": "RPA timeout in seconds",
-                                "type": "int"
-                            },
-                            {
                                 "children": [
                                     {
                                         "children": [],
@@ -5254,16 +5120,6 @@
                     {
                         "children": [],
                         "depends_on": "BLE_MESH",
-                        "help": "When this option is enabled, BLE Mesh stack will try to allocate memory\nfrom PSRAM firstly. This will save the internal RAM if PSRAM exists.\n",
-                        "id": "BLE_MESH_ALLOC_FROM_PSRAM_FIRST",
-                        "name": "BLE_MESH_ALLOC_FROM_PSRAM_FIRST",
-                        "range": null,
-                        "title": "BLE Mesh will first allocate memory from PSRAM",
-                        "type": "bool"
-                    },
-                    {
-                        "children": [],
-                        "depends_on": "BLE_MESH",
                         "help": "Enable this option to allow BLE Mesh fast provisioning solution to be used.\nWhen there are multiple unprovisioned devices around, fast provisioning can\ngreatly reduce the time consumption of the whole provisioning process.\nWhen this option is enabled, and after an unprovisioned device is provisioned\ninto a node successfully, it can be changed to a temporary Provisioner.\n",
                         "id": "BLE_MESH_FAST_PROV",
                         "name": "BLE_MESH_FAST_PROV",
@@ -5296,7 +5152,17 @@
                             {
                                 "children": [],
                                 "depends_on": "BLE_MESH && BLE_MESH_PROVISIONER",
-                                "help": "This option specifies how many devices can be provisioned by a Provisioner.\nThis value indicates the maximum number of unprovisioned devices which can be\nprovisioned by a Provisioner. For instance, if the value is 6, it means the\nProvisioner can provision up to 6 unprovisioned devices.\nTheoretically a Provisioner without the limitation of its memory can provision\nup to 32766 unprovisioned devices, here we limit the maximum number to 100\njust to limit the memory used by a Provisioner. The bigger the value is, the\nmore memory it will cost by a Provisioner to store the information of nodes.\n",
+                                "help": "This option specifies the maximum number of nodes whose information can be\nstored by a Provisioner in its upper layer.\nUsers can change this value according to the number of nodes whose information\n(e.g. Device UUID, unicast address, element number) are going to be stored by\na Provisioner. And the nodes include the provisioned ones and user-added ones.\n",
+                                "id": "BLE_MESH_MAX_STORED_NODES",
+                                "name": "BLE_MESH_MAX_STORED_NODES",
+                                "range": null,
+                                "title": "Maximum number of nodes whose information can be stored",
+                                "type": "int"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "BLE_MESH && BLE_MESH_PROVISIONER",
+                                "help": "This option specifies how many devices can be provisioned by a Provisioner.\nThis value indicates the maximum number of unprovisioned devices which can be\nprovisioned by a Provisioner. For instance\u00ef\u00bc\u0152if the value is 6, it means the\nProvisioner can provision up to 6 unprovisioned devices.\nTheoretically a Provisioner without the limitation of its memory can provision\nup to 32766 unprovisioned devices, here we limit the maximum number to 100\njust to limit the memory used by a Provisioner. The bigger the value is, the\nmore memory it will cost by a Provisioner to store the information of nodes.\n",
                                 "id": "BLE_MESH_MAX_PROV_NODES",
                                 "name": "BLE_MESH_MAX_PROV_NODES",
                                 "range": null,
@@ -5393,28 +5259,7 @@
                         "type": "bool"
                     },
                     {
-                        "children": [
-                            {
-                                "children": [],
-                                "depends_on": "BLE_MESH_GATT_PROXY_SERVER && BLE_MESH",
-                                "help": "This option determines for how long the local node advertises using\nNode Identity. The given value is in seconds. The specification limits\nthis to 60 seconds and lists it as the recommended value as well.\nSo leaving the default value is the safest option.\nWhen an unprovisioned device is provisioned successfully and becomes a\nnode, it will start to advertise using Node Identity during the time\nset by this option. And after that, Network ID will be advertised.\n",
-                                "id": "BLE_MESH_NODE_ID_TIMEOUT",
-                                "name": "BLE_MESH_NODE_ID_TIMEOUT",
-                                "range": null,
-                                "title": "Node Identity advertising timeout",
-                                "type": "int"
-                            },
-                            {
-                                "children": [],
-                                "depends_on": "BLE_MESH_GATT_PROXY_SERVER && BLE_MESH",
-                                "help": "This option specifies how many Proxy Filter entries the local node supports.\nThe entries of Proxy filter (whitelist or blacklist) are used to store a\nlist of addresses which can be used to decide which messages will be forwarded\nto the Proxy Client by the Proxy Server.\n",
-                                "id": "BLE_MESH_PROXY_FILTER_SIZE",
-                                "name": "BLE_MESH_PROXY_FILTER_SIZE",
-                                "range": null,
-                                "title": "Maximum number of filter entries per Proxy Client",
-                                "type": "int"
-                            }
-                        ],
+                        "children": [],
                         "depends_on": "BLE_MESH_NODE && BLE_MESH",
                         "help": "This option enables support for Mesh GATT Proxy Service, i.e. the\nability to act as a proxy between a Mesh GATT Client and a Mesh network.\nThis option should be enabled if a node is going to be a Proxy Server.\n",
                         "id": "BLE_MESH_GATT_PROXY_SERVER",
@@ -5435,6 +5280,26 @@
                     },
                     {
                         "children": [],
+                        "depends_on": "BLE_MESH_GATT_PROXY_SERVER && BLE_MESH",
+                        "help": "This option determines for how long the local node advertises using\nNode Identity. The given value is in seconds. The specification limits\nthis to 60 seconds and lists it as the recommended value as well.\nSo leaving the default value is the safest option.\nWhen an unprovisioned device is provisioned successfully and becomes a\nnode, it will start to advertise using Node Identity during the time\nset by this option. And after that, Network ID will be advertised.\n",
+                        "id": "BLE_MESH_NODE_ID_TIMEOUT",
+                        "name": "BLE_MESH_NODE_ID_TIMEOUT",
+                        "range": null,
+                        "title": "Node Identity advertising timeout",
+                        "type": "int"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "BLE_MESH && BLE_MESH_PROXY",
+                        "help": "This option specifies how many Proxy Filter entries the local node supports.\nThe entries of Proxy filter (whitelist or blacklist) are used to store a\nlist of addresses which can be used to decide which messages will be forwarded\nto the Proxy Client by the Proxy Server.\n",
+                        "id": "BLE_MESH_PROXY_FILTER_SIZE",
+                        "name": "BLE_MESH_PROXY_FILTER_SIZE",
+                        "range": null,
+                        "title": "Maximum number of filter entries per Proxy Client",
+                        "type": "int"
+                    },
+                    {
+                        "children": [],
                         "depends_on": "BLE_MESH",
                         "help": "Enable BLE Mesh net buffer pool tracking. This option is used to introduce another\nvariable in the bottom layer to record the usage of advertising buffers of BLE Mesh\ndevices. Recommend to enable this option as default.\n",
                         "id": "BLE_MESH_NET_BUF_POOL_USAGE",
@@ -5445,27 +5310,6 @@
                     },
                     {
                         "children": [
-                            {
-                                "children": [
-                                    {
-                                        "children": [],
-                                        "depends_on": "BLE_MESH && BLE_MESH_SETTINGS && BLE_MESH_SPECIFIC_PARTITION",
-                                        "help": "This value defines the name of the specified NVS partition used by the\nmesh stack.\n",
-                                        "id": "BLE_MESH_PARTITION_NAME",
-                                        "name": "BLE_MESH_PARTITION_NAME",
-                                        "range": null,
-                                        "title": "Name of the NVS partition for BLE Mesh",
-                                        "type": "string"
-                                    }
-                                ],
-                                "depends_on": "BLE_MESH && BLE_MESH_SETTINGS",
-                                "help": "When selected, the mesh stack will use a specified NVS partition instead of\ndefault NVS partition. Note that the specified partition must be registered\nwith NVS using nvs_flash_init_partition() API, and the partition must exists\nin the csv file.\nWhen Provisioner needs to store a large amount of nodes' information in the\nflash (e.g. more than 20), this option is recommended to be enabled.\n",
-                                "id": "BLE_MESH_SPECIFIC_PARTITION",
-                                "name": "BLE_MESH_SPECIFIC_PARTITION",
-                                "range": null,
-                                "title": "Use a specific NVS partition for BLE Mesh",
-                                "type": "bool"
-                            },
                             {
                                 "children": [],
                                 "depends_on": "BLE_MESH && BLE_MESH_SETTINGS",
@@ -5498,11 +5342,11 @@
                             }
                         ],
                         "depends_on": "BLE_MESH",
-                        "help": "When selected, the BLE Mesh stack will take care of storing/restoring the BLE\nMesh configuration persistently in flash.\nIf the device is a BLE Mesh node, when this option is enabled, the configuration\nof the device will be stored persistently, including unicast address, NetKey,\nAppKey, etc.\nAnd if the device is a BLE Mesh Provisioner, the information of the device will\nbe stored persistently, including the information of provisioned nodes, NetKey,\nAppKey, etc.\n",
+                        "help": "When selected, the BLE Mesh stack will take care of storing/restoring the\nBLE Mesh configuration persistently in flash. Currently this only supports\nstoring BLE Mesh node configuration.\nCurrently enabling this option will only store BLE Mesh nodes' information\nin the flash.\n",
                         "id": "BLE_MESH_SETTINGS",
                         "name": "BLE_MESH_SETTINGS",
                         "range": null,
-                        "title": "Store BLE Mesh configuration persistently",
+                        "title": "Store BLE Mesh Node configuration persistently",
                         "type": "bool"
                     },
                     {
@@ -5558,7 +5402,7 @@
                     {
                         "children": [],
                         "depends_on": "BLE_MESH",
-                        "help": "This option specifies the maximum capacity of the replay protection list.\nIt is similar to Network message cache size, but has a different purpose.\nThe replay protection list is used to prevent a node from replay attack,\nwhich will store the source address and sequence number of the received\nmesh messages.\nFor Provisioner, the replay protection list size should not be smaller than\nthe maximum number of nodes whose information can be stored. And the element\nnumber of each node should also be taken into consideration. For example, if\nProvisioner can provision up to 20 nodes and each node contains two elements,\nthen the replay protection list size of Provisioner should be at least 40.\n",
+                        "help": "This option specifies the maximum capacity of the replay protection list.\nIt is similar to Network message cache size, but has a different purpose.\nThe replay protection list is used to prevent a node from replay attack,\nwhich will store the source address and sequence number of the received\nmesh messages.\n",
                         "id": "BLE_MESH_CRPL",
                         "name": "BLE_MESH_CRPL",
                         "range": null,
@@ -5584,27 +5428,6 @@
                         "range": null,
                         "title": "Number of advertising buffers",
                         "type": "int"
-                    },
-                    {
-                        "children": [
-                            {
-                                "children": [],
-                                "depends_on": "BLE_MESH && BLE_MESH_SUPPORT_BLE_ADV",
-                                "help": "Number of advertising buffers for BLE packets available.\n",
-                                "id": "BLE_MESH_BLE_ADV_BUF_COUNT",
-                                "name": "BLE_MESH_BLE_ADV_BUF_COUNT",
-                                "range": null,
-                                "title": "Number of advertising buffers for BLE advertising packets",
-                                "type": "int"
-                            }
-                        ],
-                        "depends_on": "BLE_MESH",
-                        "help": "When selected, users can send normal BLE advertising packets\nwith specific API.\n",
-                        "id": "BLE_MESH_SUPPORT_BLE_ADV",
-                        "name": "BLE_MESH_SUPPORT_BLE_ADV",
-                        "range": null,
-                        "title": "Support sending normal BLE advertising packets",
-                        "type": "bool"
                     },
                     {
                         "children": [],
@@ -5873,12 +5696,12 @@
                                 "type": "int"
                             }
                         ],
-                        "depends_on": "BLE_MESH",
+                        "depends_on": "BLE_MESH_NODE && BLE_MESH",
                         "help": "Enable this option to be able to act as a Friend Node.\n",
                         "id": "BLE_MESH_FRIEND",
                         "name": "BLE_MESH_FRIEND",
                         "range": null,
-                        "title": "Support for Friend feature",
+                        "title": "Support for acting as a Friend Node",
                         "type": "bool"
                     },
                     {
@@ -6288,28 +6111,7 @@
                     {
                         "children": [
                             {
-                                "children": [
-                                    {
-                                        "children": [],
-                                        "depends_on": "BLE_MESH && BLE_MESH_SELF_TEST",
-                                        "help": "With this option enabled, an unprovisioned device can automatically\nenters mesh network using a specific test function without the pro-\nvisioning procedure. And on the Provisioner side, a test function\nneeds to be invoked to add the node information into the mesh stack.\n",
-                                        "id": "BLE_MESH_TEST_AUTO_ENTER_NETWORK",
-                                        "name": "BLE_MESH_TEST_AUTO_ENTER_NETWORK",
-                                        "range": null,
-                                        "title": "Unprovisioned device enters mesh network automatically",
-                                        "type": "bool"
-                                    },
-                                    {
-                                        "children": [],
-                                        "depends_on": "BLE_MESH && BLE_MESH_SELF_TEST",
-                                        "help": "With this option enabled, users can use whilte list to filter mesh\nadvertising packets while scanning.\n",
-                                        "id": "BLE_MESH_TEST_USE_WHITE_LIST",
-                                        "name": "BLE_MESH_TEST_USE_WHITE_LIST",
-                                        "range": null,
-                                        "title": "Use white list to filter mesh advertising packets",
-                                        "type": "bool"
-                                    }
-                                ],
+                                "children": [],
                                 "depends_on": "BLE_MESH",
                                 "help": "This option adds extra self-tests which are run every time BLE Mesh\nnetworking is initialized.\n",
                                 "id": "BLE_MESH_SELF_TEST",
@@ -6960,7 +6762,7 @@
                                             }
                                         ],
                                         "depends_on": "(SPIRAM_USE_MEMMAP || SPIRAM_USE_CAPS_ALLOC || SPIRAM_USE_MALLOC) && ESP32_SPIRAM_SUPPORT",
-                                        "help": "The ESP32 only supports 4MiB of external RAM in its address space. The hardware does support larger\nmemories, but these have to be bank-switched in and out of this address space. Enabling this allows you\nto reserve some MMU pages for this, which allows the use of the esp_himem api to manage these banks.\n\n#Note that this is limited to 62 banks, as esp_spiram_writeback_cache needs some kind of mapping of\n#some banks below that mark to work. We cannot at this moment guarantee this to exist when himem is\n#enabled.\n\nIf spiram 2T mode is enabled, the size of 64Mbit psram will be changed as 32Mbit, so himem will be\nunusable.\n",
+                                        "help": "The ESP32 only supports 4MiB of external RAM in its address space. The hardware does support larger\nmemories, but these have to be bank-switched in and out of this address space. Enabling this allows you\nto reserve some MMU pages for this, which allows the use of the esp_himem api to manage these banks.\n\n#Note that this is limited to 62 banks, as esp_spiram_writeback_cache needs some kind of mapping of\n#some banks below that mark to work. We cannot at this moment guarantee this to exist when himem is\n#enabled.\n",
                                         "id": "SPIRAM_BANKSWITCH_ENABLE",
                                         "name": "SPIRAM_BANKSWITCH_ENABLE",
                                         "range": null,
@@ -7164,16 +6966,6 @@
                                         ],
                                         "title": "SPI PSRAM WP(SD3) Pin when customising pins via eFuse (read help)",
                                         "type": "int"
-                                    },
-                                    {
-                                        "children": [],
-                                        "depends_on": "ESP32_SPIRAM_SUPPORT && ESP32_SPIRAM_SUPPORT",
-                                        "help": "Enable this option to fix single bit errors inside 64Mbit PSRAM.\n\nSome 64Mbit PSRAM chips have a hardware issue in the RAM which causes bit errors at multiple\nfixed bit positions.\n\nNote: If this option is enabled, the 64Mbit PSRAM chip will appear to be 32Mbit in size.\nApplications will not be affected unless the use the esp_himem APIs, which are not supported\nin 2T mode.\n",
-                                        "id": "SPIRAM_2T_MODE",
-                                        "name": "SPIRAM_2T_MODE",
-                                        "range": null,
-                                        "title": "Enable SPI PSRAM 2T mode",
-                                        "type": "bool"
                                     }
                                 ],
                                 "depends_on": "ESP32_SPIRAM_SUPPORT",
@@ -7621,16 +7413,6 @@
                     },
                     {
                         "children": [],
-                        "depends_on": null,
-                        "help": "Number of attempts to repeat 32k XTAL calibration\nbefore giving up and switching to the internal RC.\nIncrease this option if the 32k crystal oscillator\ndoes not start and switches to internal RC.\n",
-                        "id": "ESP32_RTC_XTAL_CAL_RETRY",
-                        "name": "ESP32_RTC_XTAL_CAL_RETRY",
-                        "range": null,
-                        "title": "Number of attempts to repeat 32k XTAL calibration",
-                        "type": "int"
-                    },
-                    {
-                        "children": [],
                         "depends_on": "ESP32_RTC_CLK_SRC_EXT_CRYS",
                         "help": "To reduce the startup time of an external RTC crystal,\nwe bootstrap it with a 32kHz square wave for a fixed number of cycles.\nSetting 0 will disable bootstrapping (if disabled, the crystal may take\nlonger to start up or fail to oscillate under some conditions).\n\nIf this value is too high, a faulty crystal may initially start and then fail.\nIf this value is too low, an otherwise good crystal may not start.\n\nTo accurately determine if the crystal has started,\nset a larger \"Number of cycles for RTC_SLOW_CLK calibration\" (about 3000).\n",
                         "id": "ESP32_RTC_XTAL_BOOTSTRAP_CYCLES",
@@ -7843,7 +7625,7 @@
                     {
                         "children": [],
                         "depends_on": null,
-                        "help": "Enable this option if you want to use the OV7670.\nDisable this option to safe memory.\n",
+                        "help": "Enable this option if you want to use the OV7670.\nDisable this option to save memory.\n",
                         "id": "OV7670_SUPPORT",
                         "name": "OV7670_SUPPORT",
                         "range": null,
@@ -7857,7 +7639,7 @@
                         "id": "OV7725_SUPPORT",
                         "name": "OV7725_SUPPORT",
                         "range": null,
-                        "title": "Support OV7725 SVGA",
+                        "title": "Support OV7725 VGA",
                         "type": "bool"
                     },
                     {
@@ -7901,6 +7683,117 @@
                         "type": "bool"
                     },
                     {
+                        "children": [],
+                        "depends_on": null,
+                        "help": "Enable this option if you want to use the GC2145.\nDisable this option to save memory.\n",
+                        "id": "GC2145_SUPPORT",
+                        "name": "GC2145_SUPPORT",
+                        "range": null,
+                        "title": "Support GC2145 2MP",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": null,
+                        "help": "Enable this option if you want to use the GC032A.\nDisable this option to save memory.\n",
+                        "id": "GC032A_SUPPORT",
+                        "name": "GC032A_SUPPORT",
+                        "range": null,
+                        "title": "Support GC032A VGA",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": null,
+                        "help": "Enable this option if you want to use the GC0308.\nDisable this option to save memory.\n",
+                        "id": "GC0308_SUPPORT",
+                        "name": "GC0308_SUPPORT",
+                        "range": null,
+                        "title": "Support GC0308 VGA",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": null,
+                        "help": "Enable this option if you want to use the BF3005.\nDisable this option to save memory.\n",
+                        "id": "BF3005_SUPPORT",
+                        "name": "BF3005_SUPPORT",
+                        "range": null,
+                        "title": "Support BF3005(BYD3005) VGA",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": null,
+                        "help": "Enable this option if you want to use the BF20A6.\nDisable this option to save memory.\n",
+                        "id": "BF20A6_SUPPORT",
+                        "name": "BF20A6_SUPPORT",
+                        "range": null,
+                        "title": "Support BF20A6(BYD20A6) VGA",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [
+                            {
+                                "children": [
+                                    {
+                                        "children": [],
+                                        "depends_on": "<choice SC101_REGS_SELECT>",
+                                        "help": "Select this option means that when xclk is 20M, the frame rate is 15fps at 720p resolution.\n",
+                                        "id": "SC101IOT_720P_15FPS_ENABLED",
+                                        "name": "SC101IOT_720P_15FPS_ENABLED",
+                                        "range": null,
+                                        "title": "xclk20M_720p_15fps",
+                                        "type": "bool"
+                                    },
+                                    {
+                                        "children": [],
+                                        "depends_on": "<choice SC101_REGS_SELECT>",
+                                        "help": "Select this option means that when xclk is 20M, the frame rate is 25fps at VGA resolution.\n",
+                                        "id": "SC101IOT_VGA_25FPS_ENABLED",
+                                        "name": "SC101IOT_VGA_25FPS_ENABLED",
+                                        "range": null,
+                                        "title": "xclk20M_VGA_25fps",
+                                        "type": "bool"
+                                    }
+                                ],
+                                "depends_on": "SC101IOT_SUPPORT",
+                                "help": "Currently SC010iot has several register sets available.\nSelect the one that matches your needs.\n",
+                                "id": "component-config-camera-configuration-support-sc101iot-hd-sc101iot-default-regs",
+                                "name": "SC101_REGS_SELECT",
+                                "title": "SC101iot default regs",
+                                "type": "choice"
+                            }
+                        ],
+                        "depends_on": null,
+                        "help": "Enable this option if you want to use the SC101IOT.\nDisable this option to save memory.\n",
+                        "id": "SC101IOT_SUPPORT",
+                        "name": "SC101IOT_SUPPORT",
+                        "range": null,
+                        "title": "Support SC101IOT HD",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": null,
+                        "help": "Enable this option if you want to use the SC030IOT.\nDisable this option to save memory.\n",
+                        "id": "SC030IOT_SUPPORT",
+                        "name": "SC030IOT_SUPPORT",
+                        "range": null,
+                        "title": "Support SC030IOT VGA",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": null,
+                        "help": "SC031GS is a global shutter CMOS sensor with high frame rate and single-frame HDR.\nEnable this option if you want to use the SC031GS.\nDisable this option to save memory.\n",
+                        "id": "SC031GS_SUPPORT",
+                        "name": "SC031GS_SUPPORT",
+                        "range": null,
+                        "title": "Support SC031GS VGA",
+                        "type": "bool"
+                    },
+                    {
                         "children": [
                             {
                                 "children": [],
@@ -7929,6 +7822,59 @@
                         "name": "SCCB_HARDWARE_I2C_PORT",
                         "title": "I2C peripheral to use for SCCB",
                         "type": "choice"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": null,
+                        "help": "Increasing this value can reduce the initialization time of the sensor.\nPlease refer to the relevant instructions of the sensor to adjust the value.\n",
+                        "id": "SCCB_CLK_FREQ",
+                        "name": "SCCB_CLK_FREQ",
+                        "range": [
+                            100000,
+                            400000
+                        ],
+                        "title": "SCCB clk frequency",
+                        "type": "int"
+                    },
+                    {
+                        "children": [
+                            {
+                                "children": [],
+                                "depends_on": "<choice GC_SENSOR_WINDOW_MODE>",
+                                "help": null,
+                                "id": "GC_SENSOR_WINDOWING_MODE",
+                                "name": "GC_SENSOR_WINDOWING_MODE",
+                                "range": null,
+                                "title": "Windowing Mode",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "<choice GC_SENSOR_WINDOW_MODE>",
+                                "help": null,
+                                "id": "GC_SENSOR_SUBSAMPLE_MODE",
+                                "name": "GC_SENSOR_SUBSAMPLE_MODE",
+                                "range": null,
+                                "title": "Subsample Mode",
+                                "type": "bool"
+                            }
+                        ],
+                        "depends_on": "GC2145_SUPPORT || GC032A_SUPPORT || GC0308_SUPPORT",
+                        "help": "This option determines how to reduce the output size when the resolution you set is less than the maximum resolution.\nSUBSAMPLE_MODE has a bigger perspective and WINDOWING_MODE has a higher frame rate.\n",
+                        "id": "component-config-camera-configuration-galaxycore-sensor-window-mode",
+                        "name": "GC_SENSOR_WINDOW_MODE",
+                        "title": "GalaxyCore Sensor Window Mode",
+                        "type": "choice"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": null,
+                        "help": "Camera task stack size\n",
+                        "id": "CAMERA_TASK_STACK_SIZE",
+                        "name": "CAMERA_TASK_STACK_SIZE",
+                        "range": null,
+                        "title": "CAM task stack size",
+                        "type": "int"
                     },
                     {
                         "children": [
@@ -7969,6 +7915,120 @@
                         "name": "CAMERA_TASK_PINNED_TO_CORE",
                         "title": "Camera task pinned to core",
                         "type": "choice"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": null,
+                        "help": "Maximum value of DMA buffer\nLarger values may fail to allocate due to insufficient contiguous memory blocks, and smaller value may cause DMA interrupt to be too frequent.\n",
+                        "id": "CAMERA_DMA_BUFFER_SIZE_MAX",
+                        "name": "CAMERA_DMA_BUFFER_SIZE_MAX",
+                        "range": [
+                            8192,
+                            32768
+                        ],
+                        "title": "DMA buffer size",
+                        "type": "int"
+                    },
+                    {
+                        "children": [
+                            {
+                                "children": [],
+                                "depends_on": "<choice CAMERA_JPEG_MODE_FRAME_SIZE_OPTION>",
+                                "help": "Use the default calculation for JPEG mode frame size.\nNote: In very low resolutions like QQVGA, the default calculation tends to result in insufficient buffer size.\n",
+                                "id": "CAMERA_JPEG_MODE_FRAME_SIZE_AUTO",
+                                "name": "CAMERA_JPEG_MODE_FRAME_SIZE_AUTO",
+                                "range": null,
+                                "title": "Use automatic calculation (width * height / 5)",
+                                "type": "bool"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "<choice CAMERA_JPEG_MODE_FRAME_SIZE_OPTION>",
+                                "help": "Specify a custom frame size in bytes for JPEG mode.\n",
+                                "id": "CAMERA_JPEG_MODE_FRAME_SIZE_CUSTOM",
+                                "name": "CAMERA_JPEG_MODE_FRAME_SIZE_CUSTOM",
+                                "range": null,
+                                "title": "Specify custom frame size",
+                                "type": "bool"
+                            }
+                        ],
+                        "depends_on": null,
+                        "help": "Select whether to use automatic calculation for JPEG mode frame size or specify a custom value.\n",
+                        "id": "component-config-camera-configuration-jpeg-mode-frame-size-option",
+                        "name": "CAMERA_JPEG_MODE_FRAME_SIZE_OPTION",
+                        "title": "JPEG mode frame size option",
+                        "type": "choice"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "CAMERA_JPEG_MODE_FRAME_SIZE_CUSTOM",
+                        "help": "This option sets the custom frame size in JPEG mode.\nSpecify the desired buffer size in bytes.\n",
+                        "id": "CAMERA_JPEG_MODE_FRAME_SIZE",
+                        "name": "CAMERA_JPEG_MODE_FRAME_SIZE",
+                        "range": null,
+                        "title": "Custom JPEG mode frame size (bytes)",
+                        "type": "int"
+                    },
+                    {
+                        "children": [
+                            {
+                                "children": [
+                                    {
+                                        "children": [],
+                                        "depends_on": "<choice CAMERA_CONV_PROTOCOL>",
+                                        "help": null,
+                                        "id": "LCD_CAM_CONV_BT601_ENABLED",
+                                        "name": "LCD_CAM_CONV_BT601_ENABLED",
+                                        "range": null,
+                                        "title": "BT601",
+                                        "type": "bool"
+                                    },
+                                    {
+                                        "children": [],
+                                        "depends_on": "<choice CAMERA_CONV_PROTOCOL>",
+                                        "help": null,
+                                        "id": "LCD_CAM_CONV_BT709_ENABLED",
+                                        "name": "LCD_CAM_CONV_BT709_ENABLED",
+                                        "range": null,
+                                        "title": "BT709",
+                                        "type": "bool"
+                                    }
+                                ],
+                                "depends_on": "CAMERA_CONVERTER_ENABLED",
+                                "help": "Supports format conversion under both BT601 and BT709 standards.\n",
+                                "id": "component-config-camera-configuration-enable-camera-rgb-yuv-converter-camera-converter-protocol",
+                                "name": "CAMERA_CONV_PROTOCOL",
+                                "title": "Camera converter protocol",
+                                "type": "choice"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "CAMERA_CONVERTER_ENABLED",
+                                "help": "Supports format conversion under both full color range mode and limited color range mode.\nIf full color range mode is selected, the color range of RGB or YUV is 0~255.\nIf limited color range mode is selected, the color range of RGB is 16~240, and the color range of YUV is Y[16~240], UV[16~235].\nFull color range mode has a wider color range, so details in the image show more clearly.\nPlease confirm the color range mode of the current camera sensor, incorrect color range mode may cause color difference in the final converted image.\nFull range mode is used by default. If this option is not selected, the format conversion function will be done using the limited range mode.\n",
+                                "id": "LCD_CAM_CONV_FULL_RANGE_ENABLED",
+                                "name": "LCD_CAM_CONV_FULL_RANGE_ENABLED",
+                                "range": null,
+                                "title": "Camera converter full range mode",
+                                "type": "bool"
+                            }
+                        ],
+                        "depends_on": "IDF_TARGET_ESP32S3",
+                        "help": "Enable this option if you want to use RGB565/YUV422/YUV420/YUV411 format conversion.\n",
+                        "id": "CAMERA_CONVERTER_ENABLED",
+                        "name": "CAMERA_CONVERTER_ENABLED",
+                        "range": null,
+                        "title": "Enable camera RGB/YUV converter",
+                        "type": "bool"
+                    },
+                    {
+                        "children": [],
+                        "depends_on": "IDF_TARGET_ESP32S2 || IDF_TARGET_ESP32S3",
+                        "help": "If this option is enabled, camera ISR will execute from IRAM.\n",
+                        "id": "LCD_CAM_ISR_IRAM_SAFE",
+                        "name": "LCD_CAM_ISR_IRAM_SAFE",
+                        "range": null,
+                        "title": "Execute camera ISR from IRAM",
+                        "type": "bool"
                     }
                 ],
                 "depends_on": null,
@@ -8673,7 +8733,58 @@
             {
                 "children": [
                     {
-                        "children": [],
+                        "children": [
+                            {
+                                "children": [
+                                    {
+                                        "children": [],
+                                        "depends_on": "<choice ESP32_WIFI_SW_COEXIST_PREFERENCE>",
+                                        "help": null,
+                                        "id": "ESP32_WIFI_SW_COEXIST_PREFERENCE_WIFI",
+                                        "name": "ESP32_WIFI_SW_COEXIST_PREFERENCE_WIFI",
+                                        "range": null,
+                                        "title": "WiFi",
+                                        "type": "bool"
+                                    },
+                                    {
+                                        "children": [],
+                                        "depends_on": "<choice ESP32_WIFI_SW_COEXIST_PREFERENCE>",
+                                        "help": null,
+                                        "id": "ESP32_WIFI_SW_COEXIST_PREFERENCE_BT",
+                                        "name": "ESP32_WIFI_SW_COEXIST_PREFERENCE_BT",
+                                        "range": null,
+                                        "title": "Bluetooth(include BR/EDR and BLE)",
+                                        "type": "bool"
+                                    },
+                                    {
+                                        "children": [],
+                                        "depends_on": "<choice ESP32_WIFI_SW_COEXIST_PREFERENCE>",
+                                        "help": null,
+                                        "id": "ESP32_WIFI_SW_COEXIST_PREFERENCE_BALANCE",
+                                        "name": "ESP32_WIFI_SW_COEXIST_PREFERENCE_BALANCE",
+                                        "range": null,
+                                        "title": "Balance",
+                                        "type": "bool"
+                                    }
+                                ],
+                                "depends_on": "ESP32_WIFI_SW_COEXIST_ENABLE",
+                                "help": "Choose Bluetooth/WiFi/Balance for different preference.\nIf choose WiFi, it will make WiFi performance better. Such, keep WiFi Audio more fluent.\nIf choose Bluetooth, it will make Bluetooth performance better. Such, keep Bluetooth(A2DP) Audio more\nfluent.\nIf choose Balance, the performance of WiFi and bluetooth will be balance. It's default. Normally, just\nchoose balance, the A2DP audio can play fluently, too.\nExcept config preference in menuconfig, you can also call esp_coex_preference_set() dynamically.\n",
+                                "id": "component-config-wi-fi-software-controls-wifi-bluetooth-coexistence-wifi-bluetooth-coexistence-performance-preference",
+                                "name": "ESP32_WIFI_SW_COEXIST_PREFERENCE",
+                                "title": "WiFi/Bluetooth coexistence performance preference",
+                                "type": "choice"
+                            },
+                            {
+                                "children": [],
+                                "depends_on": "ESP32_WIFI_SW_COEXIST_ENABLE",
+                                "help": null,
+                                "id": "ESP32_WIFI_SW_COEXIST_PREFERENCE_VALUE",
+                                "name": "ESP32_WIFI_SW_COEXIST_PREFERENCE_VALUE",
+                                "range": null,
+                                "title": null,
+                                "type": "int"
+                            }
+                        ],
                         "depends_on": "BT_ENABLED",
                         "help": "If enabled, WiFi & Bluetooth coexistence is controlled by software rather than hardware.\nRecommended for heavy traffic scenarios. Both coexistence configuration options are\nautomatically managed, no user intervention is required.\nIf only Bluetooth is used, it is recommended to disable this option to reduce binary file\nsize.\n",
                         "id": "ESP32_WIFI_SW_COEXIST_ENABLE",
@@ -9066,16 +9177,6 @@
                         "range": null,
                         "title": "WiFi RX IRAM speed optimization",
                         "type": "bool"
-                    },
-                    {
-                        "children": [],
-                        "depends_on": null,
-                        "help": "Select this option to allow the device to establish a WPA3-Personal connection with eligible AP's.\nPMF (Protected Management Frames) is a prerequisite feature for a WPA3 connection, it needs to be\nexplicitly configured before attempting connection. Please refer to the Wi-Fi Driver API Guide for details.\n",
-                        "id": "ESP32_WIFI_ENABLE_WPA3_SAE",
-                        "name": "ESP32_WIFI_ENABLE_WPA3_SAE",
-                        "range": null,
-                        "title": "Enable WPA3-Personal",
-                        "type": "bool"
                     }
                 ],
                 "depends_on": null,
@@ -9140,7 +9241,7 @@
                         "children": [
                             {
                                 "children": [],
-                                "depends_on": "!SPIRAM_ALLOW_STACK_EXTERNAL_MEMORY && <choice ESP32_COREDUMP_TO_FLASH_OR_UART>",
+                                "depends_on": "<choice ESP32_COREDUMP_TO_FLASH_OR_UART>",
                                 "help": null,
                                 "id": "ESP32_ENABLE_COREDUMP_TO_FLASH",
                                 "name": "ESP32_ENABLE_COREDUMP_TO_FLASH",
@@ -9170,7 +9271,7 @@
                             }
                         ],
                         "depends_on": null,
-                        "help": "Select place to store core dump: flash, uart or none (to disable core dumps generation).\n\nCore dumps to Flash are not available if PSRAM is used for task stacks.\n\nIf core dump is configured to be stored in flash and custom partition table is used add\ncorresponding entry to your CSV. For examples, please see predefined partition table CSV descriptions\nin the components/partition_table directory.\n",
+                        "help": "Select place to store core dump: flash, uart or none (to disable core dumps generation).\n\nIf core dump is configured to be stored in flash and custom partition table is used add\ncorresponding entry to your CSV. For examples, please see predefined partition table CSV descriptions\nin the components/partition_table directory.\n",
                         "id": "component-config-core-dump-data-destination",
                         "name": "ESP32_COREDUMP_TO_FLASH_OR_UART",
                         "title": "Data destination",
@@ -10761,16 +10862,6 @@
                         "type": "menu"
                     },
                     {
-                        "children": [],
-                        "depends_on": null,
-                        "help": "Enabling this option allows the devices to IPV6 stateless address autoconfiguration.\n\nSee RFC 4862.\n",
-                        "id": "LWIP_IPV6_AUTOCONFIG",
-                        "name": "LWIP_IPV6_AUTOCONFIG",
-                        "range": null,
-                        "title": "Enable IPV6 stateless address autoconfiguration",
-                        "type": "bool"
-                    },
-                    {
                         "children": [
                             {
                                 "children": [],
@@ -11614,7 +11705,7 @@
                                     },
                                     {
                                         "children": [],
-                                        "depends_on": "MBEDTLS_PSK_MODES && MBEDTLS_ECDH_C && MBEDTLS_TLS_ENABLED",
+                                        "depends_on": "MBEDTLS_PSK_MODES && MBEDTLS_TLS_ENABLED",
                                         "help": "Enable to support Elliptic-Curve-Diffie-Hellman PSK (pre-shared-key) TLS authentication modes.\n",
                                         "id": "MBEDTLS_KEY_EXCHANGE_ECDHE_PSK",
                                         "name": "MBEDTLS_KEY_EXCHANGE_ECDHE_PSK",
@@ -13303,19 +13394,6 @@
                         ],
                         "title": "Max Wi-Fi Scan Result Entries",
                         "type": "int"
-                    },
-                    {
-                        "children": [],
-                        "depends_on": null,
-                        "help": "Time (in seconds) after which the Wi-Fi provisioning manager will auto-stop after connecting to\na Wi-Fi network successfully.\n",
-                        "id": "WIFI_PROV_AUTOSTOP_TIMEOUT",
-                        "name": "WIFI_PROV_AUTOSTOP_TIMEOUT",
-                        "range": [
-                            5,
-                            600
-                        ],
-                        "title": "Provisioning auto-stop timeout",
-                        "type": "int"
                     }
                 ],
                 "depends_on": null,
@@ -13333,16 +13411,6 @@
                         "name": "WPA_MBEDTLS_CRYPTO",
                         "range": null,
                         "title": "Use MbedTLS crypto API's",
-                        "type": "bool"
-                    },
-                    {
-                        "children": [],
-                        "depends_on": null,
-                        "help": "Select this to enable TLS v1.2 for WPA2-Enterprise Authentication.\n",
-                        "id": "WPA_TLS_V12",
-                        "name": "WPA_TLS_V12",
-                        "range": null,
-                        "title": "Enable TLS v1.2",
                         "type": "bool"
                     }
                 ],

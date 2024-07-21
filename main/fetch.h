@@ -33,6 +33,8 @@ struct FetchParams{
 
 
 void fetch(char* url, struct FetchParams *fetchparams);
+void fetch_quote(char* url, struct FetchParams *fetchparams);
+
 
 
 #endif /* MAIN_FETCH_H_ */

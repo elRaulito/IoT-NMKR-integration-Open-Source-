@@ -1,4 +1,4 @@
-/* * Data converted from D:/Eclipse/Progetti/AIcam/main/html/img/IOTMKR.png
+/* * Data converted from C:/Users/raulr/Documents/GitHub/IoT-NMKR-integration-Open-Source-/main/html/img/IOTMKR.png
  */
 .data
 .section .rodata.embedded

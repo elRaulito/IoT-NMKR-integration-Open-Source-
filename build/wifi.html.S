@@ -1,4 +1,4 @@
-/* * Data converted from D:/Eclipse/Progetti/AIcam/main/html/wifi.html
+/* * Data converted from C:/Users/raulr/Documents/GitHub/IoT-NMKR-integration-Open-Source-/main/html/wifi.html
  * (null byte appended)
  */
 .data

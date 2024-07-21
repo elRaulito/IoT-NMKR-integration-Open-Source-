@@ -2,34 +2,34 @@
 	"sources" : 
 	[
 		{
-			"file" : "D:/Eclipse/Progetti/AIcam/build/CMakeFiles/bootloader"
+			"file" : "C:/Users/raulr/Documents/GitHub/IoT-NMKR-integration-Open-Source-/build/CMakeFiles/bootloader"
 		},
 		{
-			"file" : "D:/Eclipse/Progetti/AIcam/build/CMakeFiles/bootloader.rule"
+			"file" : "C:/Users/raulr/Documents/GitHub/IoT-NMKR-integration-Open-Source-/build/CMakeFiles/bootloader.rule"
 		},
 		{
-			"file" : "D:/Eclipse/Progetti/AIcam/build/CMakeFiles/bootloader-complete.rule"
+			"file" : "C:/Users/raulr/Documents/GitHub/IoT-NMKR-integration-Open-Source-/build/CMakeFiles/bootloader-complete.rule"
 		},
 		{
-			"file" : "D:/Eclipse/Progetti/AIcam/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule"
+			"file" : "C:/Users/raulr/Documents/GitHub/IoT-NMKR-integration-Open-Source-/build/bootloader-prefix/src/bootloader-stamp/bootloader-install.rule"
 		},
 		{
-			"file" : "D:/Eclipse/Progetti/AIcam/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule"
+			"file" : "C:/Users/raulr/Documents/GitHub/IoT-NMKR-integration-Open-Source-/build/bootloader-prefix/src/bootloader-stamp/bootloader-mkdir.rule"
 		},
 		{
-			"file" : "D:/Eclipse/Progetti/AIcam/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule"
+			"file" : "C:/Users/raulr/Documents/GitHub/IoT-NMKR-integration-Open-Source-/build/bootloader-prefix/src/bootloader-stamp/bootloader-download.rule"
 		},
 		{
-			"file" : "D:/Eclipse/Progetti/AIcam/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule"
+			"file" : "C:/Users/raulr/Documents/GitHub/IoT-NMKR-integration-Open-Source-/build/bootloader-prefix/src/bootloader-stamp/bootloader-update.rule"
 		},
 		{
-			"file" : "D:/Eclipse/Progetti/AIcam/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule"
+			"file" : "C:/Users/raulr/Documents/GitHub/IoT-NMKR-integration-Open-Source-/build/bootloader-prefix/src/bootloader-stamp/bootloader-patch.rule"
 		},
 		{
-			"file" : "D:/Eclipse/Progetti/AIcam/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule"
+			"file" : "C:/Users/raulr/Documents/GitHub/IoT-NMKR-integration-Open-Source-/build/bootloader-prefix/src/bootloader-stamp/bootloader-configure.rule"
 		},
 		{
-			"file" : "D:/Eclipse/Progetti/AIcam/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule"
+			"file" : "C:/Users/raulr/Documents/GitHub/IoT-NMKR-integration-Open-Source-/build/bootloader-prefix/src/bootloader-stamp/bootloader-build.rule"
 		}
 	],
 	"target" : 

@@ -64,11 +64,11 @@
             {
                 "children": [],
                 "depends_on": "!IDF_CMAKE",
-                "help": "The executable name/path that is used to run python.\n\n(Note: This option is used with the legacy GNU Make build system only.)\n",
+                "help": "The executable name/path that is used to run python. On some systems Python 2.x\nmay need to be invoked as python2.\n\n(Note: This option is used with the legacy GNU Make build system only.)\n",
                 "id": "SDK_PYTHON",
                 "name": "SDK_PYTHON",
                 "range": null,
-                "title": "Python interpreter",
+                "title": "Python 2 interpreter",
                 "type": "string"
             },
             {
@@ -1834,7 +1834,7 @@
                                             }
                                         ],
                                         "depends_on": "(SPIRAM_USE_MEMMAP || SPIRAM_USE_CAPS_ALLOC || SPIRAM_USE_MALLOC) && ESP32_SPIRAM_SUPPORT",
-                                        "help": "The ESP32 only supports 4MiB of external RAM in its address space. The hardware does support larger\nmemories, but these have to be bank-switched in and out of this address space. Enabling this allows you\nto reserve some MMU pages for this, which allows the use of the esp_himem api to manage these banks.\n\n#Note that this is limited to 62 banks, as esp_spiram_writeback_cache needs some kind of mapping of\n#some banks below that mark to work. We cannot at this moment guarantee this to exist when himem is\n#enabled.\n\nIf spiram 2T mode is enabled, the size of 64Mbit psram will be changed as 32Mbit, so himem will be\nunusable.\n",
+                                        "help": "The ESP32 only supports 4MiB of external RAM in its address space. The hardware does support larger\nmemories, but these have to be bank-switched in and out of this address space. Enabling this allows you\nto reserve some MMU pages for this, which allows the use of the esp_himem api to manage these banks.\n\n#Note that this is limited to 62 banks, as esp_spiram_writeback_cache needs some kind of mapping of\n#some banks below that mark to work. We cannot at this moment guarantee this to exist when himem is\n#enabled.\n",
                                         "id": "SPIRAM_BANKSWITCH_ENABLE",
                                         "name": "SPIRAM_BANKSWITCH_ENABLE",
                                         "range": null,
@@ -2038,16 +2038,6 @@
                                         ],
                                         "title": "SPI PSRAM WP(SD3) Pin when customising pins via eFuse (read help)",
                                         "type": "int"
-                                    },
-                                    {
-                                        "children": [],
-                                        "depends_on": "ESP32_SPIRAM_SUPPORT && ESP32_SPIRAM_SUPPORT",
-                                        "help": "Enable this option to fix single bit errors inside 64Mbit PSRAM.\n\nSome 64Mbit PSRAM chips have a hardware issue in the RAM which causes bit errors at multiple\nfixed bit positions.\n\nNote: If this option is enabled, the 64Mbit PSRAM chip will appear to be 32Mbit in size.\nApplications will not be affected unless the use the esp_himem APIs, which are not supported\nin 2T mode.\n",
-                                        "id": "SPIRAM_2T_MODE",
-                                        "name": "SPIRAM_2T_MODE",
-                                        "range": null,
-                                        "title": "Enable SPI PSRAM 2T mode",
-                                        "type": "bool"
                                     }
                                 ],
                                 "depends_on": "ESP32_SPIRAM_SUPPORT",
@@ -2491,16 +2481,6 @@
                             32766
                         ],
                         "title": "Number of cycles for RTC_SLOW_CLK calibration",
-                        "type": "int"
-                    },
-                    {
-                        "children": [],
-                        "depends_on": null,
-                        "help": "Number of attempts to repeat 32k XTAL calibration\nbefore giving up and switching to the internal RC.\nIncrease this option if the 32k crystal oscillator\ndoes not start and switches to internal RC.\n",
-                        "id": "ESP32_RTC_XTAL_CAL_RETRY",
-                        "name": "ESP32_RTC_XTAL_CAL_RETRY",
-                        "range": null,
-                        "title": "Number of attempts to repeat 32k XTAL calibration",
                         "type": "int"
                     },
                     {

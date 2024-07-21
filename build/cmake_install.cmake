@@ -1,4 +1,4 @@
-# Install script for directory: D:/Eclipse/Progetti/AIcam
+# Install script for directory: C:/Users/raulr/Documents/GitHub/IoT-NMKR-integration-Open-Source-
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -34,7 +34,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("D:/Eclipse/Progetti/AIcam/build/esp-idf/cmake_install.cmake")
+  include("C:/Users/raulr/Documents/GitHub/IoT-NMKR-integration-Open-Source-/build/esp-idf/cmake_install.cmake")
 
 endif()
 
@@ -46,5 +46,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "D:/Eclipse/Progetti/AIcam/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/raulr/Documents/GitHub/IoT-NMKR-integration-Open-Source-/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

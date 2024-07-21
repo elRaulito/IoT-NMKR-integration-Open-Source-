@@ -324,7 +324,7 @@ static esp_err_t on_gateway_set(httpd_req_t *req)
     printf("%s risposta JSON\n",buf);
     cJSON *payload = cJSON_Parse(buf);
 
-    char buffergateway[30];
+    char buffergateway[50];
 
 
     cJSON *server = cJSON_GetObjectItem(payload, "gateway");
@@ -409,13 +409,13 @@ static esp_err_t on_apikey_set(httpd_req_t *req)
 static esp_err_t on_deviceid_set(httpd_req_t *req)
 {
     ESP_LOGI(TAG, "url %s was hit", req->uri);
-    char buf[50];
+    char buf[104];
     memset(&buf, 0, sizeof(buf));
     httpd_req_recv(req, buf, req->content_len);
     printf("%s risposta JSON\n",buf);
     cJSON *payload = cJSON_Parse(buf);
 
-    char bufferid[50];
+    char bufferid[104];
 
 
     cJSON *server = cJSON_GetObjectItem(payload, "deviceid");
@@ -499,9 +499,9 @@ static esp_err_t on_checkbox_set(httpd_req_t *req)
 
 httpd_handle_t server = NULL;
 
-extern char gatewayNVS[20];
+extern char projectuidNVS[50];
 extern char apikeyNVS[50];
-extern char deviceidNVS[30];
+extern char addressNVS[104];
 extern int flagAnimal;
 extern int flagScooter;
 extern int flagBike;
@@ -522,8 +522,8 @@ void getNVS(){
 
 			    if(nvs_get_str(nvs, "gateway", NULL, &gateLen)==ESP_OK){
 			    	if(gateLen>0){
-			    		nvs_get_str(nvs, "gateway", gatewayNVS, &gateLen);
-			    		printf("gateway ottenuto %s\n",gatewayNVS);
+			    		nvs_get_str(nvs, "gateway", projectuidNVS, &gateLen);
+			    		printf("gateway ottenuto %s\n",projectuidNVS);
 			    	}
 
 			    }
@@ -531,8 +531,8 @@ void getNVS(){
 
 			    if(nvs_get_str(nvs, "deviceid", NULL, &idLen)==ESP_OK){
 			    	if(idLen>0){
-			    		nvs_get_str(nvs, "deviceid", deviceidNVS, &idLen);
-			    		printf("id ottenuto ottenuto %s\n",deviceidNVS);
+			    		nvs_get_str(nvs, "deviceid", addressNVS, &idLen);
+			    		printf("id ottenuto ottenuto %s\n",addressNVS);
 			    	}
 
 			    }

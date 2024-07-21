@@ -1,4 +1,4 @@
-# Install script for directory: D:/Eclipse/Progetti/AIcam/main
+# Install script for directory: C:/Users/raulr/Documents/GitHub/IoT-NMKR-integration-Open-Source-/main
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
