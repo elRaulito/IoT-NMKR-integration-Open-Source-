@@ -76,6 +76,12 @@ You can find all the docs of the NMKR APIs here https://studio-api.nmkr.io/swagg
 - /v2/MintAndSendSpecific/{projectuid}/{nftuid}/{tokencount}/{receiveraddress} This will mint a specific NFT and send to an address
 
 
+
+<img width="1097" alt="image" src="https://github.com/user-attachments/assets/bfd987e9-010b-4e6f-908a-8ac43fdcc007">
+
+<img width="1091" alt="image" src="https://github.com/user-attachments/assets/7f9b6214-5fcb-48d9-bc95-d53be064cba2">
+
+
 # Running the program
 
 To use the cam the connection may be just the power supply, you need to change the jumper on the FTDI232, therefore like the following
@@ -104,3 +110,6 @@ Setup the Wifi, uid project of NMKR, api Key and also the address that will rece
 Now just press **activate camera** and your camera will start to pubblish detected objects on the Cardano
 
 You can track my tests at the address handle $iotnmkr
+
+<img width="332" alt="image" src="https://github.com/user-attachments/assets/caeae38d-ba89-4483-bd9a-acda1397e235">
+
